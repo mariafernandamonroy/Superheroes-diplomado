@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Card } from "./components/Card";
 
 function App() {
   const [heroes, setHeroes] = useState([]);
@@ -8,14 +9,16 @@ function App() {
   }, []);
 
   const llamarApi = async () => {
-    const respuesta = await fetch("http://localhost:4000/superheroes");
+    const respuesta = await fetch("https://heroes-data-firebase-default-rtdb.firebaseio.com/superheroes.json");
     const data = await respuesta.json();
     setHeroes(data);
   };
 
   return (
-    <div className="App">
-      {heroes.map((superheroe)=><div key={superheroe.id}><p>{superheroe.nombre.toLowerCase()}</p></div>)}
+    <div className="grid grid-cols-3">
+      {heroes.map((superheroe) => (
+        <Card key={superheroe.id} heroe={superheroe} />
+      ))}
     </div>
   );
 }
